@@ -1,7 +1,13 @@
-import { GeneratedContent as PrismaGeneratedContent } from "@prisma/client"
-
-export interface GeneratedContent extends PrismaGeneratedContent {
-    metadata: string | null // Parsed as any
+export interface GeneratedContent {
+    id: string
+    userId: string
+    brandKitId: string
+    contentType: string
+    platform: string
+    content?: string
+    imageUrl?: string
+    metadata?: any
+    createdAt: string
 }
 
 export interface ContentContext {

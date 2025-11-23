@@ -30,7 +30,7 @@ export interface BrandKit {
   logoUrl?: string
   brandGuidelinesUrl?: string
   productImages?: any[]
-  status: string
+  status?: string
   createdAt: string
   updatedAt: string
 }
@@ -83,7 +83,7 @@ export class Database {
       .eq('id', id)
       .single()
 
-    if (error && error.code !== 'PGRST116') throw error
+    if (error) throw error
     return data
   }
 
@@ -98,7 +98,7 @@ export class Database {
     return data
   }
 
-  static async createUser(userData: Omit<User, 'id' | 'createdAt' | 'updatedAt'>): Promise<User> {
+  static async createUser(userData: Omit<User, 'createdAt' | 'updatedAt'>): Promise<User> {
     const { data, error } = await supabaseAdmin
       .from('User')
       .insert(userData)

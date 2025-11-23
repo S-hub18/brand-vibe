@@ -1,8 +1,18 @@
-import { PosterSession as PrismaPosterSession } from "@prisma/client"
-
-export interface PosterSession extends PrismaPosterSession {
-    conversationHistory: string | null // Parsed as ConversationTurn[]
-    gatheredInfo: string | null // Parsed as GatheredInfo
+export interface PosterSession {
+    id: string
+    userId: string
+    brandKitId: string
+    initialDescription?: string
+    conversationHistory?: ConversationTurn[]
+    gatheredInfo?: GatheredInfo
+    currentStage: string
+    refinedPrompt?: string
+    nanoBananaJobId?: string
+    generatedImageUrl?: string
+    imageVersions?: any[]
+    createdAt: string
+    updatedAt: string
+    completedAt?: string
 }
 
 export interface ConversationTurn {

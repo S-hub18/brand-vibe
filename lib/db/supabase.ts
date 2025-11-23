@@ -14,8 +14,8 @@ if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Server-side Supabase client for API routes
-export function createSupabaseServerClient() {
-  const cookieStore = cookies()
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies()
 
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {

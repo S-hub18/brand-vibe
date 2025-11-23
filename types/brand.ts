@@ -1,12 +1,25 @@
-import { BrandKit as PrismaBrandKit } from "@prisma/client"
-
-export interface BrandKit extends Omit<PrismaBrandKit, 'values' | 'colors' | 'typography' | 'products' | 'productImages'> {
-    // Override JSON fields with typed objects (parsed from strings)
+export interface BrandKit {
+    id: string
+    userId: string
+    name: string
+    description?: string
+    companyName: string
+    tagline?: string
+    vision?: string
+    mission?: string
     values: string[] | null
     colors: BrandColors | null
     typography: BrandTypography | null
+    tone?: string
+    voiceDescriptor?: string
+    audienceDescription?: string
     products: Product[] | null
+    logoUrl?: string
+    brandGuidelinesUrl?: string
     productImages: ProductImage[] | null
+    status?: string
+    createdAt: string
+    updatedAt: string
 }
 
 export interface BrandColors {
