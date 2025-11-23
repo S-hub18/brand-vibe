@@ -25,11 +25,12 @@ export async function ensureDemoUser() {
         console.error("❌ Demo user creation failed:", error)
         // Log more details about the error
         if (error && typeof error === 'object') {
+            const errorObject = error as any;
             console.error("Error details:", {
-                message: error.message,
-                code: error.code,
-                details: error.details,
-                hint: error.hint
+                message: errorObject.message,
+                code: errorObject.code,
+                details: errorObject.details,
+                hint: errorObject.hint
             })
         }
         // Don't rethrow - we still want the app to work
