@@ -1,0 +1,393 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+    --font-sans: var(--font-inter);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+
+    @keyframes accordion-down {
+        from {
+            height: 0
+        }
+
+        to {
+            height: var(--radix-accordion-content-height)
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height)
+        }
+
+        to {
+            height: 0
+        }
+    }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+*/
+@layer base {
+
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+@layer base {
+    :root {
+        /* Brand Color Palette */
+        --eggshell: #f4f1de;
+        --burnt-peach: #e07a5f;
+        --twilight-indigo: #3d405b;
+        --muted-teal: #81b29a;
+        --apricot-cream: #f2cc8f;
+
+        /* Background and Foreground */
+        --background: 45 47% 91%;
+        /* eggshell */
+        --foreground: 228 19% 30%;
+        /* twilight-indigo */
+
+        --card: 45 47% 96%;
+        --card-foreground: 228 19% 30%;
+
+        --popover: 45 47% 96%;
+        --popover-foreground: 228 19% 30%;
+
+        /* Primary: Burnt Peach */
+        --primary: 11 68% 63%;
+        --primary-foreground: 45 47% 96%;
+
+        /* Secondary: Muted Teal */
+        --secondary: 153 30% 60%;
+        --secondary-foreground: 228 19% 30%;
+
+        /* Muted: Lighter Teal */
+        --muted: 153 30% 85%;
+        --muted-foreground: 228 19% 45%;
+
+        /* Accent: Apricot Cream */
+        --accent: 41 81% 75%;
+        --accent-foreground: 228 19% 30%;
+
+        --destructive: 0 70% 60%;
+        --destructive-foreground: 45 47% 96%;
+
+        --border: 153 30% 75%;
+        --input: 153 30% 75%;
+        --ring: 11 68% 63%;
+
+        --radius: 0.75rem;
+    }
+
+    .dark {
+        /* Keeping dark mode variables just in case, but user requested light theme aesthetic */
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+
+        --primary: 217.2 91.2% 59.8%;
+        --primary-foreground: 222.2 47.4% 11.2%;
+
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 212.7 26.8% 83.9%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-feature-settings: "rlig" 1, "calt" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Smooth Scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--eggshell);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--muted-teal);
+        border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--burnt-peach);
+    }
+
+    /* Focus Visible Enhancement */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-offset-2 ring-offset-background;
+        --tw-ring-color: var(--burnt-peach);
+    }
+
+    /* Input Focus Glow */
+    input:focus,
+    textarea:focus,
+    select:focus {
+        @apply ring-2 transition-all duration-200;
+        --tw-ring-color: var(--burnt-peach);
+        border-color: var(--burnt-peach);
+    }
+}
+
+@layer utilities {
+    /* Keyframe Animations */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -1000px 0;
+        }
+        100% {
+            background-position: 1000px 0;
+        }
+    }
+
+    /* Elegant Shadow System */
+    .shadow-elegant {
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03), 0 1px 3px 0 rgb(0 0 0 / 0.06);
+    }
+
+    .shadow-elegant-lg {
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -1px rgb(0 0 0 / 0.03);
+    }
+
+    .shadow-elegant-xl {
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -2px rgb(0 0 0 / 0.03);
+    }
+
+    .shadow-premium {
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .shadow-premium-lg {
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Animation Utilities */
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .animate-slide-in-right {
+        animation: slideInRight 0.4s ease-out forwards;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out forwards;
+    }
+
+    .animate-shimmer {
+        animation: shimmer 2s infinite linear;
+        background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+        background-size: 1000px 100%;
+    }
+
+    /* Glassmorphism Utilities */
+    .glass {
+        @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-sm;
+    }
+
+    .glass-card {
+        @apply bg-white/80 backdrop-blur-md border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300;
+    }
+
+    /* Card Hover Effects */
+    .card-hover {
+        @apply transition-all duration-300 ease-out;
+    }
+
+    .card-hover:hover {
+        @apply -translate-y-1 shadow-xl;
+    }
+
+    /* Smooth Transitions */
+    .transition-smooth {
+        @apply transition-all duration-300 ease-in-out;
+    }
+
+    .transition-smooth-fast {
+        @apply transition-all duration-200 ease-in-out;
+    }
+
+    /* Brand Text */
+    .brand-text {
+        color: var(--burnt-peach);
+    }
+
+    /* Button Hover Lift */
+    .btn-lift {
+        @apply transition-all duration-200 ease-out;
+    }
+
+    .btn-lift:hover:not(:disabled) {
+        @apply -translate-y-0.5 shadow-lg;
+    }
+
+    .btn-lift:active:not(:disabled) {
+        @apply translate-y-0 shadow-md;
+    }
+
+    /* Elegant Divider */
+    .divider {
+        @apply border-t border-slate-200 my-6;
+    }
+
+    .divider-elegant {
+        @apply relative my-8;
+    }
+
+    .divider-elegant::before {
+        content: '';
+        @apply absolute inset-0 bg-gradient-to-r from-transparent via-slate-300 to-transparent h-px;
+    }
+
+    /* Leaflet Custom Styles */
+    .custom-marker-pin {
+        background: none !important;
+        border: none !important;
+    }
+
+    /* Leaflet Map Container Fix */
+    .leaflet-container {
+        height: 100% !important;
+        width: 100% !important;
+        z-index: 0;
+    }
+
+    .leaflet-pane {
+        z-index: 1;
+    }
+
+    .leaflet-top,
+    .leaflet-bottom {
+        z-index: 2;
+    }
+
+    /* Custom Scrollbar for Billboard Analyzer */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: var(--eggshell);
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: var(--muted-teal);
+        border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: var(--burnt-peach);
+    }
+}
