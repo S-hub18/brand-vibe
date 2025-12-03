@@ -44,6 +44,13 @@ const routes = [
         href: "/billboard-analyzer",
         color: "text-[#e07a5f]",
     },
+    {
+        label: "AI Studio",
+        icon: Sparkles,
+        href: "/studio",
+        color: "text-[#e07a5f]",
+        badge: "H-003",
+    },
 ]
 
 export function Sidebar() {
@@ -99,6 +106,13 @@ export function Sidebar() {
                                 <span className="text-sm font-medium">
                                     {route.label}
                                 </span>
+
+                                {/* Badge (if exists) */}
+                                {(route as any).badge && (
+                                    <span className="ml-auto text-xs font-semibold px-2 py-0.5 rounded-full bg-[#e07a5f] text-white">
+                                        {(route as any).badge}
+                                    </span>
+                                )}
 
                                 {/* Hover Effect */}
                                 {!isActive && (
