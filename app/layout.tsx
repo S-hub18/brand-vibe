@@ -3,7 +3,8 @@ import { Outfit } from "next/font/google"
 import "./globals.css"
 import { Providers } from "@/components/providers"
 import { Sidebar } from "@/components/ui/sidebar"
-
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const font = Outfit({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -20,6 +21,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
         <Providers>
+          <SpeedInsights />
+          <Analytics/>
           <div className="min-h-screen relative bg-[#f4f1de]">
             <div className="hidden h-screen md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-[80]">
               <Sidebar />
